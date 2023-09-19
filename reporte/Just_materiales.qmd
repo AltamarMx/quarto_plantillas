@@ -1,0 +1,154 @@
+---
+title: "Justificación de materiales"
+author: Julio Landa
+lang: es
+toc: true
+format:
+  html:
+    html-math-method: katex
+    code-tools: true
+    self-contained: true
+    code-fold: true
+execute:
+  warning: false
+jupyter: python3
+---
+
+<style>
+  body {
+    text-align: justify;
+  }
+</style>
+
+En el presente texto se describe brevemente el proceso de selección de los materiales a utilizar en el desarrollo del prototipo de wearable para medición de variables que influyan en el confort térmico. 
+
+Se decidió que el dispositivo se llevaría en la muñeca dada la facilidad de uso que esto permite y que es un punto en donde se pueden capturar diferentes variables como el ritmo cardiaco. 
+
+# Elección de hardware
+
+El dispositivo contará con los siguientes componentes principales:
+
+* Placa de desarrollo
+* Pantalla
+* Batería 
+* Sensores
+
+Se llevó a cabo una búsqueda de las diferentes opciones disponibles para estos componentes y se realizaron unas tablas comparativas con algunas de sus características para saber cuáles se adaptaban de mejor manera a lo que necesitamos. 
+
+
+## Placas de desarrollo 
+
+La tarjeta o placa de desarrollo es quizás la parte más importante para un dispositivo tecnologico como lo es un wearable, pues contiene el microcontrolador que cumplirá con la función de ser el cerebro del dispositivo. Se buscaron placas con microcontroladores que fueran reducidas de tamaño pero con conectividad inalambrica. Estas caracteristicas nos las ofrecen microcontroladores como los de Arduino, ESP y Raspberry. La @tbl-placas muestra una comparativa basica de algunas placas con estos microcontroladores. 
+
+Es importante mencionar que dentro de esta busqueda se encontraron algunas placas que ya tenían integrada una pantalla LCD, lo cual podría significar una ventaja, sin embargo el microcontrolador RP2040 no cuenta con conectividad Wifi o Bluetooth, y la tarjeta LILYGO cuenta con una pantalla que no es táctil, lo que representa una desventaja para la realización de las encuestas de confort.
+
+
+| Placa de desarrollo          | Wifi | Bluetooth | Comunicación                    | Cable       | Pines         |
+|------------------------------|------|-----------|---------------------------------|-------------|---------------|
+| Arduino Nano 33 IoT         | si   | 4.2       | SPI, I2C, I2S, UART            | Micro USB   | 14 d, 6 pwm   |
+| Arduino nano 33 BLE sense   | no   | 5         | UART, SPI, I2C                 | Micro USB   | 14 d-pwm      |
+| Arduino nano esp32          | si   | LE        | UART, I2C, SPI, I2S, CAN(TWAI)  | USB C       |               |
+| Arduino nano RP2040 connect | si   | si        | STI, I2C, I2S, PIO, UART       | USB C       | 22 d, 2o pwm  |
+| Raspberry pi pico W         | si   | 5.2       | UART, I2C, SPI                 | Micro USB   | 26 d, 16 pwm  |
+| ESP32 pico kit              | si   | si        | I2C, I2S, SPI                  | Micro USB   | 34 gpios      |
+| Seeed Studio XIAO nRF52840 Sense | nfc | 5  | 1xUART, 1xIIC, 1xSPI, 1xNFC, 1xSWD | USB C | 11xGPIO(PWM), 6xADC |
+| Seeed Studio XIAO ESP32C3   | si   | 5         | 1x UART, 1x IIC, 1x SPI       | USB C       | 11x GPIO(PWM), 4x ADC |
+| Seeed Studio XIAO ESP32S3   | si   | 5         | 1x UART, 1x IIC, 1x SPI       | USB C       | 11x GPIO(PWM), 9x ADC |
+| MCU RP2040 con LCD redondo de 1,28 pulgadas | no | no | rp2040 | USB C | rp2040 |
+| LILYGO TTGO                | si   | si        | esp32                         | USB C       | esp32         |
+: Placas de desarrollo {#tbl-placas}
+
+
+
+## Pantallas
+
+Se realizó una búsqueda de diferentes pantallas de tamaño reducido que pudieran adaptarse al proyecto. Se encontraron como buenas opciones pantallas circulares por su facilidad de adaptarse a un dispositivo wearable, tambien había buenas opciones rectangulares, sin embargo en su mayoría no tenían tecnologia táctil. En la @tbl-screen se muestran las características básicas de las pantallas encontradas.
+
+| Pantalla                                   | touchscreen | tecnología | dimensión |
+|--------------------------------------------|-------------|------------|----------|
+| Seeed Studio Round Display for XIAO        | si          | TFT LCD    | 1.28''   |
+| Waveshare Módulo de visualización           | no          | OLED RGB   | 1.5''    |
+| GC9A01 Pantalla                            | no          | TFT LCD    | 1.28''   |
+: Pantallas {#tbl-screen}
+
+
+
+## Baterías 
+
+En el uso de baterías de Ion de Polímero de Litio (LiPo) es muy común en los dispositivos portátiles, esto debido a su reducido tamaño, peso y facilidad de carga. En este caso, basandose en su capacidad de carga, así como dimensiones para elegir la batería adecuada. Revisando la documentación tanto de la pantalla como de la placa de desarrollo, se determinó una capacidad de carga mínima de 500 mAh. Una batería más pequeña si bien sería un beneficio por su tamaño, implicaría una duración muy limitada.
+
+| tipo | voltaje | capacidad | potencia | dimensiones |
+|------|---------|-----------|----------|-------------|
+| LiPo | 3.7     | 60 mAh    | 0.22 Wh  | 22x11.5x4 mm |
+| LiPo | 3.7     | 130 mAh   | 0.48 Wh  | 30x15x3.5 mm |
+| LiPo | 3.7     | 250 mAh   | 0.93 Wh  | 20x30x5 mm  |
+| LiPo | 3.7     | 400 mAh   | 1.48 Wh  | 35x20x6 mm  |
+| LiPo | 3.7     | 650 mAh   | 2.41 Wh  | 40x20x8 mm  |
+| LiPo | 3.7     | 1000 mAh  | 3.7 Wh   | 50x34x5 mm  |
+: Baterias {#tbl-bat}
+
+# Sensores
+
+## Sensor de temperatura 
+
+Existen 3 tipos diferentes de sensores por su funcionamiento para medir temperatura, estos son: 
+
+* Termopares
+* Termistores
+* Sensores RTD 
+
+Siendo los termistores los más utilizados en aplicaciones de la salud, como por ejemplo medir la temperatura corporal o la temperatura de la piel en algún punto. Un termistor es una resistencia eléctrica que cambia su valor dependiendo de la temperatura a la que esté expuesta, existen termistores tipo PTC que son de respuesta positiva, es decir, aumenta su resistencia cuando hay un aumento en la temperatura, de manera análoga existen los termistores tipo NTC.
+
+Se realizó una busqueda de diferentes termistores que pudieran ser útiles. Estos sensores son análogicos, sin embargo existen circuitos integrados que pueden convertir las señales de este sensor en digitales. La @tbl-temp muestra algunos de estos sensores con sus características básicas. 
+
+| Sensor             | tipo         | rango           | valor          | potencia | precisión | resolución |
+|--------------------|--------------|-----------------|----------------|----------|-----------|------------|
+| temistor NTC MF52AT| analógico    | -40 C a 120 C   | 1k hasta 100k  | 0.5 W    |           |            |
+| HiLetgo 2 unidades AHT20| digital (I2C)| -40 C a 85 C |                |     | 0.3 C    | 0.01 C
+| HiLetgo SHT31-D    | digital (I2C)| -40 C a 125 C  |                |     |    0.3 C       |
+| AHT10              | digital (I2C)| -40 C a 85 C   |                |    | 0.3 C    | 0.01 C
+: Sensores de temperatura {#tbl-temp}
+
+# Resumen de decisiones
+
+
+Después de investigar las especificaciones de las placas, se eligió la Seeed Studio XIAO ESP32S3. Esta tarjeta se adapta a las necesidades por sus diferentes modos de bajo consumo, conectividad Wifi, tamaño reducido, entre otras caracteristicas. En la @tbl-esp se muestran más a detalle dichas caracteristicas.
+
+
+| Parameter                                 | Seeed Studio XIAO ESP32S3 |
+|-------------------------------------------|----------------------------|
+| Processor                                 | ESP32-S3R8<br>Xtensa LX7 dual-core<br>32-bit processor running<br>up to 240 MHz                                                                  
+| Wireless                                  | Complete 2.4GHz WiFi subsystem<br>BLE: Bluetooth 5.0, Bluetooth mesh     
+| On-chip Memory                            | 8M PSRAM & 8MB Flash        |
+| Interface                                 | 1x UART, 1x IIC, 1x IIS, 1x SPI,11x GPIO(PWM), 9x ADC, 1x User LED, 1x Charge LED<br>1x Reset button, 1x Boot button                     |
+| Dimensions                                | 21 x 17.5mm                |
+| Power                                     | Input voltage (Type-C): 5V<br>Input voltage (BAT): 4.2V  |
+|                                           | Circuit operating Voltage (ready to operate):<br>- Type-C: 5V@19mA <br>- BAT: 3.8V@22mA           |
+|                                           | Charging battery current: 100mA                      |
+| Low Power Consumption Model <br> (Supply Power: 3.8V)                                         | Modem-sleep Model: ~ 25 mA <br> Light-sleep Model: ~ 2mA <br> Deep Sleep Model: ~ 14 μA  |
+| WiFi Enabled Power Consumption            | Active Model: ~ 100 mA     |
+| BLE Enabled Power Consumption             | Active Model: ~ 85 mA      |
+| Working Temperature                       | -40°C ~ 65°C               |
+: Caracteristicas ESP32S3 {#tbl-esp}
+
+
+
+![Placa XIAO ESP32S3](esp32.jpeg){#fig-esp32 style="display: block; margin: 0 auto;" width=300}
+
+<br>
+
+Habiendo elegido la placa de desarrollo, elegir la pantalla fue una decisión sencilla, pues la marca Seeed Studio ha desarrollado todo un ecosistema de hardware pensando en dispositivos portatiles y de tipo wearables. Su pantalla se adapta perfectamente a la placa de desarrollo, ademas de tener un display redondo y tactil, lo cual se ajusta bastante bien a lo necesitado para el proyecto. En la imagen @fig-pantalla se observa la conjunción de la placa de desarrollo montada sobre la pantalla XIAO. 
+
+
+![Pantalla XIAO](pantalla-esp.png){#fig-pantalla width=300}
+
+<br>
+
+Para asegurar un correcto funcionamiento del dispositivo, se eligió una bateria con una capacidad de 650 mAh. Esta capacidad de carga no solo cumple con los requisitos minímos de energía especificados en la hoja de datos del microcontrolador y la pantalla, si no que, da un margen adicional en la duración de la batería. Además de tener un tamaño adecuado para no afectar el diseño del dispositivo.
+
+
+En cuanto a la selección de sensores de temperatura, se optó por termistores NTC por su facilidad de uso y tamaño reducido. Son ideales para medir temperatura de la piel con una rapida respuesta y facil integración con circuitos electronicos, lo cual simplifica su inmplementación en el dispositivo wearable.
+
+
+
+
