@@ -133,14 +133,14 @@ Después de investigar las especificaciones de las placas, se eligió la Seeed S
 
 
 
-![Placa XIAO ESP32S3](esp32.jpeg){#fig-esp32 style="display: block; margin: 0 auto;" width=300}
+![Placa XIAO ESP32S3](img/esp32.jpeg){#fig-esp32 style="display: block; margin: 0 auto;" width=300}
 
 <br>
 
 Habiendo elegido la placa de desarrollo, elegir la pantalla fue una decisión sencilla, pues la marca Seeed Studio ha desarrollado todo un ecosistema de hardware pensando en dispositivos portatiles y de tipo wearables. Su pantalla se adapta perfectamente a la placa de desarrollo, ademas de tener un display redondo y tactil, lo cual se ajusta bastante bien a lo necesitado para el proyecto. En la imagen @fig-pantalla se observa la conjunción de la placa de desarrollo montada sobre la pantalla XIAO. 
 
 
-![Pantalla XIAO](pantalla-esp.png){#fig-pantalla width=300}
+![Pantalla XIAO](img/pantalla-esp.png){#fig-pantalla width=300}
 
 <br>
 
